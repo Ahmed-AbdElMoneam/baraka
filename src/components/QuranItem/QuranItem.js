@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./QuranItem.css";
 
 const QuranItem = ({
@@ -6,32 +6,79 @@ const QuranItem = ({
   juz_description,
   juz_radio,
   total_pledged,
-  handleRadioChange,
+  handleChecker,
 }) => {
-  const [completed_first, setCompletedFirst] = useState(false);
-  const [completed_second, setCompletedSecond] = useState(false);
-  const [completed_full, setCompletedFull] = useState(false);
-  const handleChangeFirst = (e) => {
-    setCompletedFirst(e.target.checked);
+  const [part, setPart] = useState([]);
+  const [first_part, setFirstPart] = useState(false);
+  const [second_part, setSecondPart] = useState(false);
+  const [completed, setCompleted] = useState(false);
+  const first_check = useRef(false);
+  const second_check = useRef(false);
+  const radio_check = useRef(false);
+  const added_radio_check = useRef(false);
+
+  useEffect(() => {
+    // const first_part = first_check.current.checked;
+    // const second_part = second_check.current.checked;
+    // console.log("ahmed");
+    // setFirstPart(first_check.current.checked);
+    // setSecondPart(second_check.current.checked);
+    setPart([first_part, second_part, completed]);
+    // .then((data) => {
+    //   console.log("ahmed");
+    // });
+    // if (completed) {
+    //   setPart("full");
+    // } else if (completed === false && first_part === true) {
+    //   setPart("first");
+    // } else if (completed === false && second_part === true) {
+    //   setPart("second");
+    // }
+  }, [first_part, second_part, completed]);
+
+  const handleFirstChange = (e) => {
+    setFirstPart(e.target.checked);
+    setCompleted(false);
+    if (radio_check.current.checked == true) {
+      added_radio_check.current.checked = true;
+      setCompleted(false);
+    } else if (second_check.current.checked == true) {
+      radio_check.current.checked = true;
+      setCompleted(true);
+    }
   };
-  const handleChangeSecond = (e) => {
-    setCompletedSecond(e.target.checked);
+
+  const handleSecondChange = (e) => {
+    setSecondPart(e.target.checked);
+    setCompleted(false);
+    if (radio_check.current.checked == true) {
+      added_radio_check.current.checked = true;
+      setCompleted(false);
+    } else if (first_check.current.checked == true) {
+      radio_check.current.checked = true;
+      setCompleted(true);
+    }
   };
-  const handleChangeFull = (e) => {
-    setCompletedFull(e.target.checked);
+
+  const handleFullClick = () => {
+    setCompleted(true);
+    first_check.current.checked = true;
+    second_check.current.checked = true;
   };
-  const handleClickFull = (e) => {
-    setCompletedFirst(!completed_first);
-    setCompletedSecond(!completed_second);
-    setCompletedFull(!completed_full);
-  };
-  const handleClickFirst = (e) => {
-    setCompletedSecond(!completed_second);
-  };
-  const handleClickSecond = (e) => {
-    setCompletedFirst(!completed_first);
-    completed_second && setCompletedFull(!completed_full);
-  };
+
+  // const handlePartValue = () => {
+
+  // };
+
+  // handlePartValue();
+  // juz_number == 1 &&
+  //   console.log(
+  //     first_check.current.checked,
+  //     second_check.current.checked,
+  //     // radio_check.current.checked,
+  //     // added_radio_check.current.checked,
+  //     completed
+  //   );
   return (
     <ul className="juz-review">
       <li className="juz-review-items">
@@ -59,16 +106,18 @@ const QuranItem = ({
           {juz_description}
         </p>
       </li>
-      <li className="juz-review-items juz-radios" onChange={handleRadioChange}>
+      <li
+        className="juz-review-items juz-radios"
+        onChange={(e) => handleChecker(e, part, juz_number)}
+      >
         <input
           type="checkbox"
           id="first-half-check"
           name={juz_radio}
           value="1"
           style={{ margin: "0 0.4vw" }}
-          checked={completed_second}
-          onChange={handleChangeFirst}
-          onClick={handleClickFirst}
+          ref={first_check}
+          onChange={handleFirstChange}
         />
         <label className="juz-radio-half-label" id="first-half-check">
           1st half
@@ -79,9 +128,8 @@ const QuranItem = ({
           name={juz_radio}
           value="2"
           style={{ margin: "0 0.4vw" }}
-          checked={completed_first}
-          onChange={handleChangeSecond}
-          onClick={handleClickSecond}
+          ref={second_check}
+          onChange={handleSecondChange}
         />
         <label className="juz-radio-half-label" id="second-half-check">
           2nd half
@@ -91,10 +139,15 @@ const QuranItem = ({
             type="radio"
             id="full-juz"
             name={juz_radio}
-            value="2"
-            checked={completed_full}
-            onChange={handleChangeFull}
-            onClick={handleClickFull}
+            value="3"
+            ref={radio_check}
+            onClick={handleFullClick}
+          />
+          <input
+            type="radio"
+            name={juz_radio}
+            style={{ display: "none" }}
+            ref={added_radio_check}
           />
           <label className="juz-radio-full-label" id="full-juz">
             Full

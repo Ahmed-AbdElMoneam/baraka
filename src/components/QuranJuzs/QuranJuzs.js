@@ -2,7 +2,7 @@ import { useState } from "react";
 import QuranItem from "../QuranItem/QuranItem";
 import "./QuranJuzs.css";
 
-const QuranJuzs = ({ handleRadioChange }) => {
+const QuranJuzs = ({ handleChecker }) => {
   const quran_juzs = [
     {
       id: 1,
@@ -46,7 +46,7 @@ const QuranJuzs = ({ handleRadioChange }) => {
               juz_description={juz.juz_description}
               juz_radio={juz.id}
               total_pledged={juz.total_pledged}
-              handleRadioChange={handleRadioChange}
+              handleChecker={handleChecker}
             />
           </li>
         );
