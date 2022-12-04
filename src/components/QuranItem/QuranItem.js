@@ -68,7 +68,7 @@ const QuranItem = ({
 
   return (
     <ul className="juz-review">
-      <li className="juz-review-items">
+      <li className="juz-review-items" style={{ flexBasis: "7vw" }}>
         <p
           style={{
             fontFamily: "Ledger",
@@ -149,7 +149,7 @@ const QuranItem = ({
           </label>
         </div>
       </li>
-      <li className="juz-review-items">
+      <li className="juz-review-items" style={{ flexBasis: "2vw" }}>
         <p
           style={{
             fontFamily: "Ledger",
