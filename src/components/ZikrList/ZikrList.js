@@ -6,12 +6,12 @@ const ZikrList = ({
   handleTitleChange,
   handleZikrNumber,
   handleAddingField,
-  fields,
+  azkar,
 }) => {
   return (
     <div>
       <ul className="content-counter-list">
-        {fields.map((field) => {
+        {azkar.map((field) => {
           return (
             <li key={field.id} className="content-counter-item">
               <CounterField

@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./QuranItem.css";
+// import { pledgeRef } from "../../firebase";
+// import { getDocs, query, where } from "firebase/firestore";
 
 const QuranItem = ({
   juz_number,
@@ -7,78 +9,63 @@ const QuranItem = ({
   juz_radio,
   total_pledged,
   handleChecker,
+  users_total,
 }) => {
-  const [part, setPart] = useState([]);
-  const [first_part, setFirstPart] = useState(false);
-  const [second_part, setSecondPart] = useState(false);
-  const [completed, setCompleted] = useState(false);
+  // const [pledged, setPledged] = useState(0);
   const first_check = useRef(false);
   const second_check = useRef(false);
   const radio_check = useRef(false);
   const added_radio_check = useRef(false);
 
-  useEffect(() => {
-    // const first_part = first_check.current.checked;
-    // const second_part = second_check.current.checked;
-    // console.log("ahmed");
-    // setFirstPart(first_check.current.checked);
-    // setSecondPart(second_check.current.checked);
-    setPart([first_part, second_part, completed]);
-    // .then((data) => {
-    //   console.log("ahmed");
-    // });
-    // if (completed) {
-    //   setPart("full");
-    // } else if (completed === false && first_part === true) {
-    //   setPart("first");
-    // } else if (completed === false && second_part === true) {
-    //   setPart("second");
-    // }
-  }, [first_part, second_part, completed]);
+  // const pledgeQuery = query(pledgeRef, where("juzs", "==", ""))
+
+  // useEffect(() => {
+  //   // juz_number == 1 &&
+  //   getDocs(pledgeRef)
+  //     .then((snapshot) => {
+  //       // let records = [];
+  //       // snapshot.docs.forEach((doc) => {
+  //       //   records.push({ ...doc.data(), id: doc.id });
+  //       // });
+  //       console.log(snapshot);
+  //       snapshot.docs.map((doc) => {
+  //         let juz_part = 0;
+  //         console.log(doc);
+  //         doc.data().juzs.map((juz) => {
+  //           // juz_part = juz_part + juz.status;
+  //           // setPledged(juz_part);
+  //           // console.log(juz);
+  //         });
+  //       });
+  //       // console.log(records);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.message);
+  //     });
+  // }, []);
 
   const handleFirstChange = (e) => {
-    setFirstPart(e.target.checked);
-    setCompleted(false);
     if (radio_check.current.checked == true) {
       added_radio_check.current.checked = true;
-      setCompleted(false);
     } else if (second_check.current.checked == true) {
       radio_check.current.checked = true;
-      setCompleted(true);
     }
   };
 
   const handleSecondChange = (e) => {
-    setSecondPart(e.target.checked);
-    setCompleted(false);
     if (radio_check.current.checked == true) {
       added_radio_check.current.checked = true;
-      setCompleted(false);
     } else if (first_check.current.checked == true) {
       radio_check.current.checked = true;
-      setCompleted(true);
     }
   };
 
   const handleFullClick = () => {
-    setCompleted(true);
+    radio_check.current.checked = true;
     first_check.current.checked = true;
     second_check.current.checked = true;
   };
 
-  // const handlePartValue = () => {
-
-  // };
-
-  // handlePartValue();
-  // juz_number == 1 &&
-  //   console.log(
-  //     first_check.current.checked,
-  //     second_check.current.checked,
-  //     // radio_check.current.checked,
-  //     // added_radio_check.current.checked,
-  //     completed
-  //   );
   return (
     <ul className="juz-review">
       <li className="juz-review-items">
@@ -108,7 +95,15 @@ const QuranItem = ({
       </li>
       <li
         className="juz-review-items juz-radios"
-        onChange={(e) => handleChecker(e, part, juz_number)}
+        onChange={(e) =>
+          handleChecker(
+            e,
+            first_check.current.checked,
+            second_check.current.checked,
+            radio_check.current.checked,
+            juz_number
+          )
+        }
       >
         <input
           type="checkbox"

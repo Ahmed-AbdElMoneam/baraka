@@ -7,7 +7,7 @@ const CounterField = ({
   handleTitleChange,
   handleZikrNumber,
 }) => {
-  const [val, setVal] = useState("Option 1");
+  const [val, setVal] = useState("zikrCount");
 
   const handleChange = (e) => {
     console.log(e.target.name);
@@ -48,7 +48,7 @@ const CounterField = ({
         name={field_title}
         id={field_id}
         onChange={handleZikrNumber}
-        // value={counter}
+        // value={val}
         defaultValue="zikrCount"
       >
         <optgroup label="Suggestions">
