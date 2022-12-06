@@ -127,18 +127,6 @@ const QuranJuzs = ({ handleChecker, users_total }) => {
   ];
   const [juzs, setJuzs] = useState(quran_juzs);
 
-  // const prevArray = users_total.filter(
-  //   (zikr) =>
-  //     zikr.zikr_type !== "Tasbeeh" &&
-  //     zikr.zikr_type !== "Salawat" &&
-  //     zikr.zikr_type !== "Takbeer" &&
-  //     zikr.zikr_type !== "Tahleel"
-  // );
-  // prevArray.sort((a, b) => a.zikr_type - b.zikr_type);
-
-  // const pledged_array = users_total.slice(4);
-  // console.log(users_total[0].count);
-
   return (
     <ul className="content-quran-list">
       {juzs.map((juz) => {
@@ -149,7 +137,6 @@ const QuranJuzs = ({ handleChecker, users_total }) => {
               juz_description={juz.juz_description}
               juz_radio={juz.id}
               handleChecker={handleChecker}
-              // total_pledged="0"
               total_pledged={users_total[juz.id - 1].count}
             />
           </li>

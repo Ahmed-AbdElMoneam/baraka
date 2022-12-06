@@ -2,10 +2,10 @@ import { useEffect, useState, useRef } from "react";
 import ZikrList from "../ZikrList/ZikrList";
 import QuranList from "../QuranList/QuranList";
 import "./Form.css";
-import { pledgeRef, totalRef, updateRef } from "../../firebase";
-import { addDoc, getDocs, updateDoc } from "@firebase/firestore";
+import { totalRef } from "../../firebase";
+import { getDocs } from "@firebase/firestore";
 
-const Form = () => {
+const Form = ({ setOpenModal, handleGetData }) => {
   const [loading, setLoading] = useState(true);
   const [azkar, setAzkar] = useState([
     { id: 0, field_title: "Salawat" },
@@ -171,56 +171,25 @@ const Form = () => {
   //   // users_total,
   // };
 
-  const handleSubmit = async (e) => {
+  const handlePledge = (e) => {
     e.preventDefault();
     // console.log(submitted);
 
-    let arr = [];
-    users_total.map((zikr) => {
-      const record = user_total.find(
-        (userRecord) => userRecord.zikr_type === zikr.zikr_type
-      );
-      // record && console.log(record.count);
-      if (record) {
-        arr.push({
-          zikr_type: zikr.zikr_type,
-          count: Number(zikr.count) + Number(record.count),
-        });
-      }
-    });
-    // console.log(arr);
-
-    let pledgeData = {
-      azkar,
-      juzs,
-      user_total,
-    };
-
-    let totalData = {
-      users_total: arr,
-      // users_total: user_total,
-    };
+    setOpenModal(true);
+    handleGetData(azkar, juzs, user_total, users_total);
 
     // addDoc(totalRef, totalData).then(() => {
     //   console.log("total added");
     //   // window.location.reload();
     //   // formRef.current.reset();
     // });
-
-    updateDoc(updateRef, totalData);
-
-    addDoc(pledgeRef, pledgeData).then(() => {
-      // console.log("added");
-      window.location.reload();
-      // formRef.current.reset();
-    });
   };
 
   if (!loading) {
     return (
       <>
         <h1 className="content-header">Your Baraka Pledge</h1>
-        <form className="content-form" ref={formRef} onSubmit={handleSubmit}>
+        <form className="content-form" ref={formRef}>
           <div className="content-form-inputs">
             <ZikrList
               handleTitleChange={handleTitleChange}
@@ -233,7 +202,9 @@ const Form = () => {
               users_total={users_total.slice(4)}
             />
           </div>
-          <button className="pledge-button">Pledge</button>
+          <button className="pledge-button" onClick={handlePledge}>
+            Pledge
+          </button>
         </form>
       </>
     );

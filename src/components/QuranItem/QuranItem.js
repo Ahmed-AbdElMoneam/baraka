@@ -1,7 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import "./QuranItem.css";
-// import { pledgeRef } from "../../firebase";
-// import { getDocs, query, where } from "firebase/firestore";
 
 const QuranItem = ({
   juz_number,
@@ -9,40 +7,11 @@ const QuranItem = ({
   juz_radio,
   total_pledged,
   handleChecker,
-  users_total,
 }) => {
-  // const [pledged, setPledged] = useState(0);
   const first_check = useRef(false);
   const second_check = useRef(false);
   const radio_check = useRef(false);
   const added_radio_check = useRef(false);
-
-  // const pledgeQuery = query(pledgeRef, where("juzs", "==", ""))
-
-  // useEffect(() => {
-  //   // juz_number == 1 &&
-  //   getDocs(pledgeRef)
-  //     .then((snapshot) => {
-  //       // let records = [];
-  //       // snapshot.docs.forEach((doc) => {
-  //       //   records.push({ ...doc.data(), id: doc.id });
-  //       // });
-  //       console.log(snapshot);
-  //       snapshot.docs.map((doc) => {
-  //         let juz_part = 0;
-  //         console.log(doc);
-  //         doc.data().juzs.map((juz) => {
-  //           // juz_part = juz_part + juz.status;
-  //           // setPledged(juz_part);
-  //           // console.log(juz);
-  //         });
-  //       });
-  //       // console.log(records);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.message);
-  //     });
-  // }, []);
 
   const handleFirstChange = (e) => {
     if (radio_check.current.checked == true) {
