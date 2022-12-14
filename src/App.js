@@ -18,44 +18,47 @@ function App() {
     });
   };
 
-  const handleSubmit = (e, name, id) => {
+  const handleSubmit = (e, name, id, validator) => {
     e.preventDefault();
-
-    let arr = [];
-    data.users_total.map((zikr) => {
-      const record = data.user_total.find(
-        (userRecord) => userRecord.zikr_type === zikr.zikr_type
-      );
-      // record && console.log(record.count);
-      if (record) {
-        arr.push({
-          zikr_type: zikr.zikr_type,
-          count: Number(zikr.count) + Number(record.count),
-        });
-      }
-    });
-    // console.log(arr);
-
-    let pledgeData = {
-      azkar: data.azkar,
-      juzs: data.juzs,
-      user_total: data.user_total,
-      name: name,
-      id: id,
-    };
-
-    let totalData = {
-      users_total: arr,
-      // users_total: user_total,
-    };
-
-    updateDoc(updateRef, totalData);
-
-    addDoc(pledgeRef, pledgeData).then(() => {
-      // console.log("added");
-      window.location.reload();
-      // formRef.current.reset();
-    });
+    if (!name) {
+      alert("Please Enter a valid Name");
+    } else if (!id || !validator) {
+      alert("Please Enter a valid E-mail");
+    } else {
+      // let arr = [];
+      // data.users_total.map((zikr) => {
+      //   const record = data.user_total.find(
+      //     (userRecord) => userRecord.zikr_type === zikr.zikr_type
+      //   );
+      //   // record && console.log(record.count);
+      //   if (record) {
+      //     arr.push({
+      //       zikr_type: zikr.zikr_type,
+      //       count: Number(zikr.count) + Number(record.count),
+      //     });
+      //   }
+      // });
+      // console.log(arr);
+      let pledgeData = {
+        azkar: data.azkar,
+        juzs: data.juzs,
+        user_total: data.user_total,
+        name: name,
+        id: id,
+        users_total: data.users_total,
+      };
+      console.log(pledgeData);
+      // let totalData = {
+      //   users_total: arr,
+      //   // users_total: user_total,
+      // };
+      // updateDoc(updateRef, totalData);
+      // addDoc(pledgeRef, pledgeData).then(() => {
+      //   // console.log("added");
+      //   window.location.reload();
+      //   // formRef.current.reset();
+      // });
+    }
   };
 
   return (

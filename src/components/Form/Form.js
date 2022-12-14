@@ -2,8 +2,8 @@ import { useEffect, useState, useRef } from "react";
 import ZikrList from "../ZikrList/ZikrList";
 import QuranList from "../QuranList/QuranList";
 import "./Form.css";
-import { totalRef } from "../../firebase";
-import { getDocs } from "@firebase/firestore";
+import { totalRef, updateRef } from "../../firebase";
+import { getDocs, updateDoc } from "@firebase/firestore";
 
 const Form = ({ setOpenModal, handleGetData }) => {
   const [loading, setLoading] = useState(true);
@@ -66,35 +66,137 @@ const Form = ({ setOpenModal, handleGetData }) => {
       });
   }, []);
 
-  const handleTitleChange = (e) => {
+  const handleTitleChange = (e, val) => {
     const target_field_id = e.target.id;
     const target_field_type = e.target.value;
+    const target_field_value = val;
 
     setAzkar((prevAzkar) => {
       const other_azkar = prevAzkar.filter(
         (field) => field.id != target_field_id
       );
-      const ordered_azkar = [
-        ...other_azkar,
-        { id: Number(target_field_id), field_title: target_field_type },
-      ];
+      const targeted_azkar = prevAzkar.filter(
+        (field) => field.id == target_field_id
+      );
+      let ordered_azkar = [];
+      // console.log(targeted_azkar);
+      // zikr_number: zikr_number;
+      targeted_azkar[0].zikr_number
+        ? (ordered_azkar = [
+            ...other_azkar,
+            {
+              id: Number(target_field_id),
+              field_title: target_field_type,
+              zikr_number: targeted_azkar[0].zikr_number,
+            },
+          ])
+        : (ordered_azkar = [
+            ...other_azkar,
+            {
+              id: Number(target_field_id),
+              field_title: target_field_type,
+            },
+          ]);
       ordered_azkar.sort((a, b) => a.id - b.id);
       return ordered_azkar;
     });
+
+    // other_zikr_records.push({
+    //   zikr_type: field_name,
+    //   count: Number(previous_count) + Number(zikr_number),
+    // });
+    // setTotalAzkar(other_zikr_records);
+    setTotalAzkar((prevTotalAzkar) => {
+      const zikr_record = prevTotalAzkar.filter(
+        (zikr) => zikr.zikr_type == target_field_type
+      );
+      return zikr_record;
+      // const previous_count = zikr_record[0].count;
+      // const other_zikr_records = prevTotalAzkar.filter(
+      //   (zikr) => zikr.zikr_type != target_field_type
+      // );
+      // let total_array = [];
+      // Number(previous_count)
+      //   ? (total_array = [
+      //       ...other_zikr_records,
+      //       {
+      //         zikr_type: target_field_type,
+      //         count: Number(previous_count) + Number(target_field_value),
+      //       },
+      //     ])
+      //   : (total_array = [
+      //       ...other_zikr_records,
+      //       {
+      //         zikr_type: target_field_type,
+      //         count: Number(previous_count),
+      //       },
+      //     ]);
+      // return total_array;
+    });
+    // let total_array = [];
+    // azkar.map((zikr) => {
+    //   if (zikr.field_title === "Salawat") {
+    //     total_array[0] = Number(total_array[0]) + Number(zikr.zikr_number);
+    //   } else if (zikr.field_title === "Tasbeeh") {
+    //     total_array[1] = Number(total_array[1]) + Number(zikr.zikr_number);
+    //   } else if (zikr.field_title === "Takbeer") {
+    //     total_array[2] = Number(total_array[2]) + Number(zikr.zikr_number);
+    //   } else if (zikr.field_title === "Tahleel") {
+    //     total_array[3] = Number(total_array[3]) + Number(zikr.zikr_number);
+    //   }
+    // });
+    // setTotalAzkar((prevTotalAzkar) => {
+    //   let total_azkar_array = [];
+    //   prevTotalAzkar.map((zikr) => {
+    //     if (zikr.zikr_type === "Salawat") {
+    //       total_azkar_array[0] =
+    //         Number(total_azkar_array[0]) + Number(zikr.count);
+    //     } else if (zikr.zikr_type === "Tasbeeh") {
+    //       total_azkar_array[1] =
+    //         Number(total_azkar_array[1]) + Number(zikr.count);
+    //     } else if (zikr.zikr_type === "Takbeer") {
+    //       total_azkar_array[2] =
+    //         Number(total_azkar_array[2]) + Number(zikr.count);
+    //     } else if (zikr.zikr_type === "Tahleel") {
+    //       total_azkar_array[3] =
+    //         Number(total_azkar_array[3]) + Number(zikr.count);
+    //     }
+    //   });
+    //   total_array.map((zikr, index) => {
+    //     total_array[index] = Number(zikr) + Number(total_azkar_array[index]);
+    //   });
+    //   const other_zikr_records = prevTotalAzkar.filter(
+    //     (zikr) =>
+    //       zikr.zikr_type != "Salawat" &&
+    //       zikr.zikr_type != "Tasbeeh" &&
+    //       zikr.zikr_type != "Takbeer" &&
+    //       zikr.zikr_type != "Tahleel"
+    //   );
+    //   return [
+    //     ...other_zikr_records,
+    //     {
+    //       zikr_type: "Salawat",
+    //       count: total_array[0],
+    //     },
+    //     {
+    //       zikr_type: "Tasbeeh",
+    //       count: total_array[1],
+    //     },
+    //     {
+    //       zikr_type: "Takbeer",
+    //       count: total_array[2],
+    //     },
+    //     {
+    //       zikr_type: "Tahleel",
+    //       count: total_array[3],
+    //     },
+    //   ];
+    // });
   };
 
-  const handleZikrNumber = (e, val) => {
-    const field_id = e.target.id;
-    const field_name = e.target.name;
+  const handleZikrNumber = (e, field_id, field_title, field_value) => {
+    const field_name = field_title;
     const zikr_number = e.target.value;
-
-    const zikr_record = user_total.filter(
-      (zikr) => zikr.zikr_type === field_name
-    );
-    const previous_count = zikr_record[0].count;
-    const other_zikr_records = user_total.filter(
-      (zikr) => zikr.zikr_type !== field_name
-    );
 
     setAzkar((prevAzkar) => {
       const other_azkar = prevAzkar.filter((field) => field.id != field_id);
@@ -110,11 +212,22 @@ const Form = ({ setOpenModal, handleGetData }) => {
       return ordered_azkar;
     });
 
-    other_zikr_records.push({
-      zikr_type: field_name,
-      count: Number(previous_count) + Number(zikr_number),
+    setTotalAzkar((prevTotalAzkar) => {
+      const zikr_record = prevTotalAzkar.filter(
+        (zikr) => zikr.zikr_type == field_name
+      );
+      const previous_count = zikr_record[0].count;
+      const other_zikr_records = prevTotalAzkar.filter(
+        (zikr) => zikr.zikr_type != field_name
+      );
+      return [
+        ...other_zikr_records,
+        {
+          zikr_type: field_name,
+          count: Number(previous_count) + Number(zikr_number),
+        },
+      ];
     });
-    setTotalAzkar(other_zikr_records);
   };
 
   const handleAddingField = (e) => {
@@ -178,11 +291,17 @@ const Form = ({ setOpenModal, handleGetData }) => {
     setOpenModal(true);
     handleGetData(azkar, juzs, user_total, users_total);
 
-    // addDoc(totalRef, totalData).then(() => {
+    // let totalData = {
+    //   // user_total,
+    //   users_total: user_total,
+    // };
+
+    // addDoc(updateRef, totalData).then(() => {
     //   console.log("total added");
     //   // window.location.reload();
     //   // formRef.current.reset();
     // });
+    // updateDoc(updateRef, totalData);
   };
 
   if (!loading) {

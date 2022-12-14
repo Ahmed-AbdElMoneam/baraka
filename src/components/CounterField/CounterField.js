@@ -7,16 +7,12 @@ const CounterField = ({
   handleTitleChange,
   handleZikrNumber,
 }) => {
-  const [val, setVal] = useState("zikrCount");
+  const [val, setVal] = useState(0);
 
-  const handleChange = (e) => {
-    console.log(e.target.name);
+  const handleFieldValue = (e) => {
     setVal(e.target.value);
   };
 
-  const handleClick = () => {
-    setVal("");
-  };
   return (
     <>
       {field_id == 0 && (
@@ -34,7 +30,7 @@ const CounterField = ({
           className="field-type field-type-arrow"
           name={field_title}
           id={field_id}
-          onChange={handleTitleChange}
+          onChange={(e) => handleTitleChange(e, val)}
           value={field_title}
         >
           <option value="Salawat">Salawat</option>
@@ -47,12 +43,15 @@ const CounterField = ({
         className="field"
         name={field_title}
         id={field_id}
-        onChange={handleZikrNumber}
-        // value={val}
-        defaultValue="zikrCount"
+        onChange={(e) => {
+          handleFieldValue(e);
+          handleZikrNumber(e, field_id, field_title, val);
+        }}
+        value={val}
+        // defaultValue="zikrCount"
       >
         <optgroup label="Suggestions">
-          <option value="zikrCount" disabled hidden>
+          <option value="0" disabled hidden>
             Zikr Count
           </option>
           <option value="100">100</option>
