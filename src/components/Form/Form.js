@@ -71,6 +71,14 @@ const Form = ({ setOpenModal, handleGetData }) => {
     const target_field_type = e.target.value;
     const target_field_value = val;
 
+    const zikr_record = user_total.filter(
+      (zikr) => zikr.zikr_type == target_field_type
+    );
+    const previous_count = zikr_record[0].count;
+    const other_zikr_records = user_total.filter(
+      (zikr) => zikr.zikr_type != target_field_type
+    );
+
     setAzkar((prevAzkar) => {
       const other_azkar = prevAzkar.filter(
         (field) => field.id != target_field_id
@@ -101,38 +109,38 @@ const Form = ({ setOpenModal, handleGetData }) => {
       return ordered_azkar;
     });
 
-    // other_zikr_records.push({
-    //   zikr_type: field_name,
-    //   count: Number(previous_count) + Number(zikr_number),
-    // });
-    // setTotalAzkar(other_zikr_records);
-    setTotalAzkar((prevTotalAzkar) => {
-      const zikr_record = prevTotalAzkar.filter(
-        (zikr) => zikr.zikr_type == target_field_type
-      );
-      return zikr_record;
-      // const previous_count = zikr_record[0].count;
-      // const other_zikr_records = prevTotalAzkar.filter(
-      //   (zikr) => zikr.zikr_type != target_field_type
-      // );
-      // let total_array = [];
-      // Number(previous_count)
-      //   ? (total_array = [
-      //       ...other_zikr_records,
-      //       {
-      //         zikr_type: target_field_type,
-      //         count: Number(previous_count) + Number(target_field_value),
-      //       },
-      //     ])
-      //   : (total_array = [
-      //       ...other_zikr_records,
-      //       {
-      //         zikr_type: target_field_type,
-      //         count: Number(previous_count),
-      //       },
-      //     ]);
-      // return total_array;
+    other_zikr_records.push({
+      zikr_type: target_field_type,
+      count: Number(previous_count) + Number(target_field_value),
     });
+    setTotalAzkar(other_zikr_records);
+    // setTotalAzkar((prevTotalAzkar) => {
+    //   const zikr_record = prevTotalAzkar.filter(
+    //     (zikr) => zikr.zikr_type == target_field_type
+    //   );
+    //   return zikr_record;
+    //   // const previous_count = zikr_record[0].count;
+    //   // const other_zikr_records = prevTotalAzkar.filter(
+    //   //   (zikr) => zikr.zikr_type != target_field_type
+    //   // );
+    //   // let total_array = [];
+    //   // Number(previous_count)
+    //   //   ? (total_array = [
+    //   //       ...other_zikr_records,
+    //   //       {
+    //   //         zikr_type: target_field_type,
+    //   //         count: Number(previous_count) + Number(target_field_value),
+    //   //       },
+    //   //     ])
+    //   //   : (total_array = [
+    //   //       ...other_zikr_records,
+    //   //       {
+    //   //         zikr_type: target_field_type,
+    //   //         count: Number(previous_count),
+    //   //       },
+    //   //     ]);
+    //   // return total_array;
+    // });
     // let total_array = [];
     // azkar.map((zikr) => {
     //   if (zikr.field_title === "Salawat") {

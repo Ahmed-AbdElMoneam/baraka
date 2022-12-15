@@ -137,7 +137,7 @@ const QuranJuzs = ({ handleChecker, users_total }) => {
               juz_description={juz.juz_description}
               juz_radio={juz.id}
               handleChecker={handleChecker}
-              // total_pledged={users_total[juz.id - 1].count}
+              total_pledged={users_total[juz.id - 1].count}
             />
           </li>
         );
