@@ -24,7 +24,7 @@
   padding: 25px;
 }
 
-.modalContainer .modalTitle {
+.modalTitle {
 	width: 100%;
   display: flex;
 	flex-direction: row;
@@ -43,7 +43,7 @@
   cursor: pointer;
 }
 
-.modalContainer .modalBody {
+.modalBody {
 	padding: 0;
   display: flex;
 	flex-direction: column;
@@ -53,7 +53,6 @@
 
 .modalBody form{
 	width: 100%;
-	height: 12vh;
 	display: flex;
 	flex-direction: column;
   justify-content: space-between;
@@ -69,7 +68,7 @@
 }
 
 .modalFormSection label{
-	font-size: 1.5vw;
+	font-size: 1.5rem;
 }
 
 .modalInputFields{
@@ -86,22 +85,26 @@
 	border: 2px solid rgba(128, 128, 128, 0.548);
 }
 
-.modalContainer .modalFooter {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.validation-phrase{
+  margin-top: 0;
+  font-size: 0.8rem;
 }
 
-.modalContainer .modalFooter button {
+.modalFooter {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  gap: 2vw;
+}
+
+.modalFooter button {
   width: 13vw;
   height: 7vh;
-	margin-top: 3vh;
-	margin-right: 2vw;
   border: none;
   background-color: #619E52;
   color: white;
   border-radius: 8px;
-  font-size: 1.5vw;
+  font-size: 1rem;
   cursor: pointer;
 	font-family: 'Ledger';
   font-style: normal;
@@ -109,4 +112,24 @@
 
 #cancelBtn {
   background-color: crimson;
+}
+/***************************************************************************************/
+@media screen and (max-width: 768px) {
+  .modalContainer {
+    width: 80%;
+    margin: 2vh 0;
+  }
+  .modalCloseButton button {
+    font-size: 10vw;
+  }
+  .modalFormSection{
+    flex-direction: column;
+    gap: 0;
+  }
+  .modalFooter {
+    justify-content: space-evenly;
+  }
+  .modalFooter button {
+    width: 25vw;
+  }
 }

@@ -78,17 +78,17 @@ const Modal = ({ closeModal, handleSubmit }) => {
                   onKeyUp={handleTyping}
                 />
                 {isEmail(id) === "wrong" && !checker && (
-                  <p style={{ fontSize: "0.04rem", color: "red" }}>
+                  <p className="validation-phrase" style={{ color: "red" }}>
                     Wrong Email!
                   </p>
                 )}
                 {isEmail(id) === "correct" && !checker && (
-                  <p style={{ fontSize: "0.04rem", color: "green" }}>
+                  <p className="validation-phrase" style={{ color: "green" }}>
                     Correct Email!
                   </p>
                 )}
                 {checker && (
-                  <p style={{ fontSize: "0.04rem", color: "orange" }}>
+                  <p className="validation-phrase" style={{ color: "orange" }}>
                     Checking...
                   </p>
                 )}

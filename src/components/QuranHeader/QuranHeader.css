@@ -24,3 +24,12 @@
 	font-family: 'Ledger';
 	font-style: normal;
 }
+/***************************************************************************************/
+@media screen and (max-width: 768px) {
+	.quran-list-title{
+		font-size: 6vw;
+	}
+	.quran-categories{
+		font-size: 2.5vw;
+	}
+}

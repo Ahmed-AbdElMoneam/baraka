@@ -23,3 +23,13 @@
 .button:hover{
 	cursor: pointer;
 }
+/***************************************************************************************/
+@media screen and (max-width: 768px) {
+	.button-div{
+		width: 40%;
+		font-size: 3vw;
+	}
+	.button{
+		width: 10%;
+	}
+}
