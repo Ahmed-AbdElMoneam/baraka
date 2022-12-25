@@ -8,12 +8,13 @@ import { addDoc, updateDoc } from "@firebase/firestore";
 function App() {
   const [openModal, setOpenModal] = useState(false);
   const [data, setData] = useState({});
+  const [success, setSuccess] = useState(false);
 
-  const handleGetData = (azkar, juzs, user_total, users_total) => {
+  const handleGetData = (azkar, juzs, azkar_total, user_total, users_total) => {
     setData({
       azkar: azkar,
       juzs: juzs,
-      user_total: user_total,
+      user_total: [...user_total, ...azkar_total],
       users_total: users_total,
     });
   };
@@ -30,33 +31,36 @@ function App() {
         const record = data.user_total.find(
           (userRecord) => userRecord.zikr_type === zikr.zikr_type
         );
-        // record && console.log(record.count);
+
         if (record) {
           arr.push({
             zikr_type: zikr.zikr_type,
             count: Number(zikr.count) + Number(record.count),
           });
+        } else {
+          arr.push({
+            zikr_type: zikr.zikr_type,
+            count: Number(zikr.count),
+          });
         }
       });
-      // console.log(arr);
       let pledgeData = {
         azkar: data.azkar,
         juzs: data.juzs,
         user_total: data.user_total,
         name: name,
         id: id,
-        users_total: data.users_total,
       };
-      // console.log(pledgeData);
       let totalData = {
         users_total: arr,
         // users_total: user_total,
       };
       updateDoc(updateRef, totalData);
       addDoc(pledgeRef, pledgeData).then(() => {
-        // console.log("added");
-        window.location.reload();
-        // formRef.current.reset();
+        setSuccess(true);
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       });
     }
   };
@@ -75,7 +79,11 @@ function App() {
         </div>
       </div>
       {openModal && (
-        <Modal closeModal={setOpenModal} handleSubmit={handleSubmit} />
+        <Modal
+          closeModal={setOpenModal}
+          handleSubmit={handleSubmit}
+          success={success}
+        />
       )}
     </div>
   );

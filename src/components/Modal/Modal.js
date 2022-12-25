@@ -1,7 +1,8 @@
 import { useState } from "react";
+import Success from "../Success/Success";
 import "./Modal.css";
 
-const Modal = ({ closeModal, handleSubmit }) => {
+const Modal = ({ closeModal, handleSubmit, success }) => {
   const [name, setName] = useState("");
   const [id, setID] = useState("");
   const [checker, setChecker] = useState(false);
@@ -39,7 +40,10 @@ const Modal = ({ closeModal, handleSubmit }) => {
 
   return (
     <div className="modalBackground">
-      <div className="modalContainer">
+      <div
+        className="modalContainer"
+        style={{ display: `${success ? "none" : "flex"}` }}
+      >
         <div className="modalTitle">
           <h1>Confirm your pledge</h1>
           <div className="modalCloseButton">
@@ -105,6 +109,7 @@ const Modal = ({ closeModal, handleSubmit }) => {
           </button>
         </div>
       </div>
+      {success && <Success />}
     </div>
   );
 };

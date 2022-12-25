@@ -9,7 +9,7 @@ const ZikrList = ({
   azkar,
 }) => {
   return (
-    <div>
+    <div className="content-counter-group">
       <ul className="content-counter-list">
         {azkar.map((field) => {
           return (
@@ -24,7 +24,7 @@ const ZikrList = ({
           );
         })}
       </ul>
-      <div className="content-counter-adder">
+      <div className="content-counter-adder" onClick={handleAddingField}>
         <AddField handleAddingField={handleAddingField} />
       </div>
     </div>

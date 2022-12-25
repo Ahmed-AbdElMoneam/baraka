@@ -1,6 +1,6 @@
 import "./AddField.css";
 
-const AddField = ({ handleAddingField }) => {
+const AddField = () => {
   return (
     <>
       <input
@@ -9,7 +9,7 @@ const AddField = ({ handleAddingField }) => {
         className="button-div"
         disabled
       />
-      <button className="button" onClick={handleAddingField}>
+      <button className="button">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="icon icon-tabler icon-tabler-circle-plus"

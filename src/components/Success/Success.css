@@ -1,0 +1,38 @@
+.success-message{
+  width: 55vw;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  display: flex;
+  flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+  padding: 3vw;
+}
+
+.success-message h1 {
+	color: #88B04B;
+	font-weight: 900;
+	font-size: 40px;
+	margin-bottom: 10px;
+}
+
+.success-message p {
+	color: #404F5E;
+	font-size:20px;
+	margin: 0;
+	text-align: center;
+}
+
+.success-message i {
+  color: #9ABC66;
+  font-size: 100px;
+  /* line-height: 200px; */
+  /* margin-left:-15px; */
+}
+/***************************************************************************************/
+@media screen and (max-width: 768px) {
+	.success-message{
+		width: 70vw;
+	}
+}
