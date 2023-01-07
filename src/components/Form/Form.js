@@ -170,6 +170,8 @@ const Form = ({ setOpenModal, handleGetData }) => {
       ? (part = "second")
       : (part = "");
 
+    console.log(first, second, full);
+
     setJuzs((prev) => {
       const edited_juzs = prev.filter((juz) => juz.id !== juz_number - 1);
       const juzID = juz_number - 1;

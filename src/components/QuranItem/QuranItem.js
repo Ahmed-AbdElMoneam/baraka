@@ -13,26 +13,60 @@ const QuranItem = ({
   const radio_check = useRef(false);
   const added_radio_check = useRef(false);
 
+  // const handleFirstChange = (e) => {
+  //   if (radio_check.current.checked == true) {
+  //     added_radio_check.current.checked = true;
+  //   } else if (second_check.current.checked == true) {
+  //     radio_check.current.checked = true;
+  //   }
+  // };
+
   const handleFirstChange = (e) => {
     if (radio_check.current.checked == true) {
-      added_radio_check.current.checked = true;
+      radio_check.current.checked = false;
     } else if (second_check.current.checked == true) {
       radio_check.current.checked = true;
     }
   };
 
+  // const handleSecondChange = (e) => {
+  //   if (radio_check.current.checked == true) {
+  //     added_radio_check.current.checked = true;
+  //   } else if (first_check.current.checked == true) {
+  //     radio_check.current.checked = true;
+  //   }
+  // };
+
   const handleSecondChange = (e) => {
     if (radio_check.current.checked == true) {
-      added_radio_check.current.checked = true;
+      radio_check.current.checked = false;
     } else if (first_check.current.checked == true) {
       radio_check.current.checked = true;
     }
   };
 
+  // const handleFullClick = () => {
+  //   console.log("clicked");
+  //   radio_check.current.checked = true;
+  //   first_check.current.checked = true;
+  //   second_check.current.checked = true;
+  // };
+
   const handleFullClick = () => {
-    radio_check.current.checked = true;
-    first_check.current.checked = true;
-    second_check.current.checked = true;
+    if (
+      first_check.current.checked === true &&
+      second_check.current.checked === false
+    ) {
+      second_check.current.checked = true;
+    } else if (
+      second_check.current.checked === true &&
+      first_check.current.checked === false
+    ) {
+      first_check.current.checked = true;
+    } else {
+      first_check.current.checked = !first_check.current.checked;
+      second_check.current.checked = !second_check.current.checked;
+    }
   };
 
   return (
@@ -100,6 +134,14 @@ const QuranItem = ({
         </label>
         <div className="full-juz-section">
           <input
+            type="checkbox"
+            id="full-juz"
+            name={juz_radio}
+            value="3"
+            ref={radio_check}
+            onChange={handleFullClick}
+          />
+          {/* <input
             type="radio"
             id="full-juz"
             name={juz_radio}
@@ -112,7 +154,7 @@ const QuranItem = ({
             name={juz_radio}
             style={{ display: "none" }}
             ref={added_radio_check}
-          />
+          /> */}
           <label className="juz-radio-full-label" id="full-juz">
             Full
           </label>
