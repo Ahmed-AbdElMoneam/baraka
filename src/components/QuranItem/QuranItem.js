@@ -10,49 +10,66 @@ const QuranItem = ({
 }) => {
   const first_check = useRef(false);
   const second_check = useRef(false);
-  const radio_check = useRef(false);
-  const added_radio_check = useRef(false);
+  const full_check = useRef(false);
+  // const added_radio_check = useRef(false);
 
   // const handleFirstChange = (e) => {
-  //   if (radio_check.current.checked == true) {
+  //   if (full_check.current.checked == true) {
   //     added_radio_check.current.checked = true;
   //   } else if (second_check.current.checked == true) {
-  //     radio_check.current.checked = true;
+  //     full_check.current.checked = true;
   //   }
   // };
 
-  const handleFirstChange = (e) => {
-    if (radio_check.current.checked == true) {
-      radio_check.current.checked = false;
-    } else if (second_check.current.checked == true) {
-      radio_check.current.checked = true;
+  const handleFirstChange = () => {
+    if (full_check.current.checked === true) {
+      full_check.current.checked = false;
+    } else if (second_check.current.checked === true) {
+      full_check.current.checked = true;
     }
   };
 
   // const handleSecondChange = (e) => {
-  //   if (radio_check.current.checked == true) {
+  //   if (full_check.current.checked === true) {
   //     added_radio_check.current.checked = true;
-  //   } else if (first_check.current.checked == true) {
-  //     radio_check.current.checked = true;
+  //   } else if (first_check.current.checked === true) {
+  //     full_check.current.checked = true;
   //   }
   // };
 
-  const handleSecondChange = (e) => {
-    if (radio_check.current.checked == true) {
-      radio_check.current.checked = false;
-    } else if (first_check.current.checked == true) {
-      radio_check.current.checked = true;
+  const handleSecondChange = () => {
+    if (full_check.current.checked === true) {
+      full_check.current.checked = false;
+    } else if (first_check.current.checked === true) {
+      full_check.current.checked = true;
     }
   };
 
   // const handleFullClick = () => {
   //   console.log("clicked");
-  //   radio_check.current.checked = true;
-  //   first_check.current.checked = true;
-  //   second_check.current.checked = true;
+  //   // full_check.current.checked = true;
+  //   // first_check.current.checked = true;
+  //   // second_check.current.checked = true;
+  //   if (
+  //     first_check.current.checked === true &&
+  //     second_check.current.checked === false
+  //   ) {
+  //     second_check.current.checked = true;
+  //     full_check.current.checked = true;
+  //   } else if (
+  //     second_check.current.checked === true &&
+  //     first_check.current.checked === false
+  //   ) {
+  //     first_check.current.checked = true;
+  //     full_check.current.checked = true;
+  //   } else {
+  //     first_check.current.checked = true;
+  //     second_check.current.checked = true;
+  //     full_check.current.checked = true;
+  //   }
   // };
 
-  const handleFullClick = () => {
+  const handleFullChange = () => {
     if (
       first_check.current.checked === true &&
       second_check.current.checked === false
@@ -103,7 +120,7 @@ const QuranItem = ({
             e,
             first_check.current.checked,
             second_check.current.checked,
-            radio_check.current.checked,
+            full_check.current.checked,
             juz_number
           )
         }
@@ -112,7 +129,6 @@ const QuranItem = ({
           type="checkbox"
           id="first-half-check"
           name={juz_radio}
-          value="1"
           style={{ margin: "0 0.4vw" }}
           ref={first_check}
           onChange={handleFirstChange}
@@ -124,7 +140,6 @@ const QuranItem = ({
           type="checkbox"
           id="second-half-check"
           name={juz_radio}
-          value="2"
           style={{ margin: "0 0.4vw" }}
           ref={second_check}
           onChange={handleSecondChange}
@@ -137,16 +152,15 @@ const QuranItem = ({
             type="checkbox"
             id="full-juz"
             name={juz_radio}
-            value="3"
-            ref={radio_check}
-            onChange={handleFullClick}
+            ref={full_check}
+            onChange={handleFullChange}
           />
           {/* <input
             type="radio"
             id="full-juz"
             name={juz_radio}
             value="3"
-            ref={radio_check}
+            ref={full_check}
             onClick={handleFullClick}
           />
           <input
